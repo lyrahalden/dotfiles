@@ -1,0 +1,18 @@
+#refreshes the bash profile
+alias bash-ref='source ~/.bash_profile'
+
+# Unzips Stardew Valley Mod files to proper location
+# must be in directory where mod zip file is located
+# rename file to something with no spaces eg mv More\ Artifacts.zip More-Artifacts.zip
+# $1 = source file
+# Example: openmod More-Artifacts.zip
+
+openmod() {
+  unzip $1 -d ~/Library/Application\ Support/Steam/steamapps/common/Stardew\ Valley/Contents/MacOS/Mods
+}
+
+#makes a directory, then moves you into that directory
+mcd () {
+    mkdir -pv $1
+    cd $1
+}
