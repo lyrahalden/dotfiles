@@ -1,1 +1,0 @@
-/Users/lyrahall/.bash_profile
