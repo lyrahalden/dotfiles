@@ -1,64 +1,93 @@
 
-" An example for a vimrc file.
-"
-" Maintainer:	Bram Moolenaar <Bram@vim.org>
-" Last change:	2017 Sep 20
-"
-" To use it, copy it to
-"     for Unix and OS/2:  ~/.vimrc
-"	      for Amiga:  s:.vimrc
-"  for MS-DOS and Win32:  $VIM\_vimrc
-"	    for OpenVMS:  sys$login:.vimrc
+" set leader key to ,
+let mapleader = ","
+
+" set $MYVIMRC
+let $MYVIMRC="~/.vimrc"
+
+" config for Vundle install
+set nocompatible              " be iMproved, required
+filetype off                  " required
+
+" set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+ " alternatively, pass a path where Vundle should install plugins
+ "call vundle#begin('~/some/path/here')
+
+ " let Vundle manage Vundle, required
+ Plugin 'VundleVim/Vundle.vim'
+
+" install diffconflicts
+"Plugin 'whiteinge/diffconflicts' didn't work
+
+" Install vim-tmux navigator
+Plugin 'christoomey/vim-tmux-navigator'
+
+" Install commentary
+Plugin 'tpope/vim-commentary'
+
+" Install ctrl+p
+Plugin 'ctrlpvim/ctrlp.vim'
+
+" Scala plugins
+Plugin 'derekwyatt/vim-sbt'
+Plugin 'derekwyatt/vim-scala'
+
+" All of your Plugins must be added before the following line
+call vundle#end()            " required
+filetype plugin indent on    " required
+
+" Let ctrlp have up to 10 results.
+let g:ctrlp_max_height = 10
+
+" new splits open below and to the right
+set splitbelow
+set splitright
+
+"open vimrc from any vim buffer
+nnoremap <leader>ev :vsplit $MYVIMRC<cr>
+nnoremap <leader>sv :source $MYVIMRC<cr>
+
+"see leader key appear at bottom
+set showcmd
+
+let g:tmux_navigator_no_mappings = 1
+
+nnoremap <silent> {c-h} :TmuxNavigateLeft<cr>
+nnoremap <silent> {c-j} :TmuxNavigateDown<cr>
+nnoremap <silent> {c-k} :TmuxNavigateUp<cr>
+nnoremap <silent> {c-l} :TmuxNavigateRight<cr>
+nnoremap <silent> {c-/} :TmuxNavigatePrevious<cr>
+
+" turn off swap files and backups
+set noswapfile
+set nobackup 
+set nowritebackup 
+
+" disable arrow keys
+noremap  <Up> ""
+noremap! <Up> <Esc>
+noremap  <Down> ""
+noremap! <Down> <Esc>
+noremap  <Left> ""
+noremap! <Left> <Esc>
+noremap  <Right> ""
+noremap! <Right> <Esc>
+
+" turn on wildmenu and wildmode for tab completion
+set wildmenu
+set wildmode=longest:full,full
+
+" make vim copy/paste commands work with mac clipboard
+set clipboard=unnamed
 
 " display line numbers
 set number
 
-" When started as "evim", evim.vim will already have done these settings.
-if v:progname =~? "evim"
-  finish
-endif
+" highlighting of search results
+set hlsearch
 
-" Get the defaults that most users want.
-source $VIMRUNTIME/defaults.vim
-
-if has("vms")
-  set nobackup		" do not keep a backup file, use versions instead
-else
-  set backup		" keep a backup file (restore to previous version)
-  if has('persistent_undo')
-    set undofile	" keep an undo file (undo changes after closing)
-  endif
-endif
-
-if &t_Co > 2 || has("gui_running")
-  " Switch on highlighting the last used search pattern.
-  set hlsearch
-endif
-
-" Only do this part when compiled with support for autocommands.
-if has("autocmd")
-
-  " Put these in an autocmd group, so that we can delete them easily.
-  augroup vimrcEx
-  au!
-
-  " For all text files set 'textwidth' to 78 characters.
-  autocmd FileType text setlocal textwidth=78
-
-  augroup END
-
-else
-
-  set autoindent		" always set autoindenting on
-
-endif " has("autocmd")
-
-" Add optional packages.
-"
-" The matchit plugin makes the % command work better, but it is not backwards
-" compatible.
-" The ! means the package won't be loaded right away but when plugins are
-" loaded during initialization.
-if has('syntax') && has('eval')
-  packadd! matchit
-endif
+" We have to turn this stuff back on if we want all of our features.
+filetype plugin indent on " Filetype auto-detection
+syntax on " Syntax highlighting
